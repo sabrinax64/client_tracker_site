@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rohan's Startup Plan</title>
+<meta name="description" content="A 12-week plan to take one AI startup idea from a real problem to a working product with real users, with a shared goal tracker.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f6f3;
+    --surface: #ffffff;
+    --surface-2: #f1efea;
+    --text: #1d1d1b;
+    --muted: #6b6a66;
+    --line: #e4e1da;
+    --accent: #2f6fed;
+    --accent-soft: #e6eefd;
+    --done: #1f8a5b;
+    --done-soft: #e3f3ea;
+    --doing: #b7791f;
+    --doing-soft: #fbf0dc;
+    --todo-soft: #efeee9;
+    --shadow: 0 1px 2px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.04);
+    --radius: 14px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141413;
+      --surface: #1c1c1a;
+      --surface-2: #242421;
+      --text: #ecebe7;
+      --muted: #a3a29c;
+      --line: #33322e;
+      --accent: #6b9bff;
+      --accent-soft: #1e2a44;
+      --done: #4cc38a;
+      --done-soft: #17301f;
+      --doing: #e3a948;
+      --doing-soft: #3a2e17;
+      --todo-soft: #2a2a27;
+      --shadow: none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141413; --surface: #1c1c1a; --surface-2: #242421; --text: #ecebe7; --muted: #a3a29c;
+    --line: #33322e; --accent: #6b9bff; --accent-soft: #1e2a44; --done: #4cc38a; --done-soft: #17301f;
+    --doing: #e3a948; --doing-soft: #3a2e17; --todo-soft: #2a2a27; --shadow: none;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 0 16px; }
+
+  /* Nav */
+  nav {
+    position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px); border-bottom: 1px solid var(--line);
+  }
+  nav .wrap { display: flex; align-items: center; gap: 20px; height: 56px; overflow-x: auto; }
+  nav .brand { font-weight: 700; white-space: nowrap; margin-right: auto; }
+  nav a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; white-space: nowrap; }
+  nav a:hover { color: var(--text); }
+
+  /* Hero */
+  header.hero { padding: 64px 0 40px; }
+  .eyebrow { color: var(--accent); font-weight: 600; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; }
+  h1 { font-size: clamp(32px, 6vw, 48px); line-height: 1.1; margin: 10px 0 16px; letter-spacing: -0.02em; }
+  .lead { font-size: 18px; color: var(--muted); max-width: 680px; margin: 0; }
+  .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+  .pill { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; font-size: 14px; color: var(--muted); }
+  .pill b { color: var(--text); font-weight: 600; }
+
+  section { padding: 40px 0; border-top: 1px solid var(--line); }
+  h2 { font-size: 26px; letter-spacing: -0.01em; margin: 0 0 8px; }
+  .section-lead { color: var(--muted); margin: 0 0 24px; max-width: 680px; }
+  h3 { font-size: 18px; margin: 0; }
+
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+
+  /* Principles */
+  .principles { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .principle { padding: 20px; }
+  .principle .num { color: var(--accent); font-weight: 700; font-size: 14px; }
+  .principle h3 { margin: 4px 0 6px; font-size: 16px; }
+  .principle p { margin: 0; color: var(--muted); font-size: 15px; }
+
+  /* Timeline */
+  .timeline-scroll { overflow-x: auto; }
+  .timeline { padding: 20px; min-width: 600px; }
+  .tl-grid { display: grid; grid-template-columns: 200px repeat(12, 1fr); align-items: center; row-gap: 10px; }
+  .tl-head { font-size: 12px; color: var(--muted); text-align: center; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+  .tl-head.month { font-weight: 600; color: var(--text); border-bottom: none; padding-bottom: 0; }
+  .tl-label { font-size: 14px; padding-right: 12px; white-space: nowrap; }
+  .tl-bar { height: 22px; border-radius: 6px; background: var(--todo-soft); border: 1px solid var(--line); position: relative; overflow: hidden; margin: 0 3px; }
+  .tl-bar .fill { position: absolute; inset: 0 auto 0 0; background: var(--done); opacity: .85; transition: width .4s ease; }
+  .tl-cp { display: flex; justify-content: flex-end; }
+  .diamond { width: 14px; height: 14px; transform: rotate(45deg); background: var(--accent); border-radius: 2px; margin-right: -7px; }
+  .diamond.done { background: var(--done); }
+  .tl-note { font-size: 13px; color: var(--muted); margin: 14px 0 0; }
+
+  /* Months */
+  .month { padding: 24px; margin-bottom: 16px; }
+  .month-top { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 4px; }
+  .month-tag { font-size: 13px; color: var(--muted); }
+  .stage { margin-top: 18px; }
+  .stage h4 { font-size: 15px; margin: 0 0 6px; }
+  .stage h4 span { color: var(--muted); font-weight: 500; }
+  .stage ul { margin: 0; padding-left: 20px; }
+  .stage li { margin: 4px 0; }
+  .month-outcome { margin: 18px 0 0; padding: 12px 14px; background: var(--accent-soft); border-radius: 10px; font-size: 15px; }
+
+  /* Table */
+  .table-scroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 15px; min-width: 560px; }
+  th, td { text-align: left; padding: 14px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 13px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+  tr:last-child td { border-bottom: none; }
+  .small-note { color: var(--muted); font-size: 14px; margin: 12px 0 0; }
+
+  /* Work + disclaimer lists */
+  .feature-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  .feature-list li { padding: 14px 18px; }
+  .feature-list b { display: block; margin-bottom: 2px; }
+  .feature-list span { color: var(--muted); font-size: 15px; }
+
+  /* Tracker */
+  .tracker-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 18px; }
+  .sync { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--done); }
+  .dot.local { background: var(--doing); }
+  .dot.err { background: #d64545; }
+  .banner { display: none; margin-bottom: 16px; padding: 12px 14px; border-radius: 10px; background: var(--doing-soft); font-size: 14px; }
+  .banner.show { display: block; }
+
+  .progress-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .stat { padding: 16px 18px; }
+  .stat .label { font-size: 13px; color: var(--muted); }
+  .stat .value { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; }
+  .meter { height: 8px; background: var(--todo-soft); border-radius: 99px; overflow: hidden; margin-top: 8px; }
+  .meter > div { height: 100%; background: var(--done); border-radius: 99px; transition: width .4s ease; }
+
+  .tabs { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+  .tab { border: 1px solid var(--line); background: var(--surface); color: var(--muted); border-radius: 999px; padding: 6px 14px; font: inherit; font-size: 14px; cursor: pointer; }
+  .tab[aria-selected="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+  .task-group { padding: 8px 0; }
+  .task-group + .task-group { border-top: 1px solid var(--line); }
+  .task-group h4 { font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin: 12px 18px 4px; }
+  .task { display: flex; align-items: center; gap: 12px; padding: 10px 18px; }
+  .task-text { flex: 1; font-size: 15px; }
+  .task.is-done .task-text { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--line); }
+  .status {
+    flex-shrink: 0; border: none; cursor: pointer; font: inherit; font-size: 13px; font-weight: 600;
+    border-radius: 999px; padding: 5px 12px; min-width: 104px; text-align: center; transition: background .15s, color .15s;
+  }
+  .status[data-s="todo"] { background: var(--todo-soft); color: var(--muted); }
+  .status[data-s="doing"] { background: var(--doing-soft); color: var(--doing); }
+  .status[data-s="done"] { background: var(--done-soft); color: var(--done); }
+  .status:focus-visible, .tab:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .del { border: none; background: none; color: var(--muted); cursor: pointer; font-size: 18px; line-height: 1; padding: 4px 6px; border-radius: 6px; }
+  .del:hover { background: var(--surface-2); color: var(--text); }
+
+  .add-goal { display: flex; gap: 8px; padding: 16px 18px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  .add-goal input, .add-goal select {
+    font: inherit; font-size: 15px; padding: 9px 12px; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--bg); color: var(--text);
+  }
+  .add-goal input { flex: 1; min-width: 180px; }
+  .btn { font: inherit; font-size: 15px; font-weight: 600; border: none; border-radius: 10px; padding: 9px 16px; background: var(--accent); color: #fff; cursor: pointer; }
+  .btn:disabled { opacity: .5; cursor: default; }
+  .empty { padding: 18px; color: var(--muted); font-size: 15px; }
+  .hint { font-size: 13px; color: var(--muted); margin: 10px 0 0; }
+
+  footer { padding: 40px 0 60px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px); opacity: 0;
+    background: var(--text); color: var(--bg); padding: 10px 16px; border-radius: 10px; font-size: 14px;
+    transition: all .2s ease; pointer-events: none; max-width: calc(100% - 32px);
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 600px) {
+    header.hero { padding: 40px 0 28px; }
+    .tl-grid { grid-template-columns: 150px repeat(12, 1fr); }
+    .tl-label { font-size: 13px; }
+    .task { padding: 10px 14px; align-items: flex-start; }
+    .status { min-width: 92px; }
+    .month { padding: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <span class="brand">Rohan's Startup Plan</span>
+    <a href="#glance">Timeline</a>
+    <a href="#months">Plan</a>
+    <a href="#milestones">Milestones</a>
+    <a href="#tracker">Tracker</a>
+  </div>
+</nav>
+
+<main>
+  <header class="hero wrap">
+    <div class="eyebrow">3-month startup plan</div>
+    <h1>From a real problem to a working product with real users.</h1>
+    <p class="lead">By mid-February 2027, Rohan has taken one AI startup idea from a real problem to a working product with real users, and has the early results to show for it.</p>
+    <div class="meta">
+      <span class="pill"><b>12 weeks</b> &middot; Nov 16, 2026 to Feb 7, 2027</span>
+      <span class="pill"><b>8 stages</b></span>
+      <span class="pill"><b>3</b> monthly checkpoints</span>
+    </div>
+  </header>
+
+  <section class="wrap" id="principles">
+    <h2>Principles behind the plan</h2>
+    <p class="section-lead">Five rules that shape every week.</p>
+    <div class="principles" id="principles-list"></div>
+  </section>
+
+  <section class="wrap" id="glance">
+    <h2>At a glance</h2>
+    <p class="section-lead">Building gets three weeks over winter break; every other stage takes one or two weeks, and each month ends with a checkpoint. Bars fill in as tasks are marked done in the tracker.</p>
+    <div class="card timeline-scroll"><div class="timeline"><div class="tl-grid" id="timeline"></div></div></div>
+  </section>
+
+  <section class="wrap" id="months">
+    <h2>Month by month</h2>
+    <p class="section-lead">Each month ends with a checkpoint call. Rohan keeps one running set of shared project notes (interviews, ideas, test results and user feedback) that we review together.</p>
+    <div id="month-list"></div>
+  </section>
+
+  <section class="wrap" id="milestones">
+    <h2>Milestones</h2>
+    <p class="section-lead">Three monthly checkpoints track Rohan's progress. The right-hand column is what I commit to delivering each month, whatever pace the project moves at.</p>
+    <div class="card table-scroll">
+      <table>
+        <thead><tr><th>Checkpoint</th><th>Rohan's milestone</th><th>My deliverables</th></tr></thead>
+        <tbody id="milestone-rows"></tbody>
+      </table>
+    </div>
+    <p class="small-note">If a milestone slips, we adjust the timeline together on the next call rather than skip a stage.</p>
+  </section>
+
+  <section class="wrap" id="tracker">
+    <div class="tracker-bar">
+      <div>
+        <h2>Shared goal tracker</h2>
+        <p class="section-lead" style="margin:0">Click a status to move it from Not started to In progress to Done. Everyone with this link sees the same tracker.</p>
+      </div>
+      <div class="sync" aria-live="polite"><span class="dot" id="sync-dot"></span><span id="sync-text">Loading...</span></div>
+    </div>
+    <div class="banner" id="local-banner">Local mode: the shared tracker isn't connected yet, so changes are saved only in this browser. See the README to connect storage on Vercel.</div>
+
+    <div class="progress-grid" id="progress"></div>
+
+    <div class="tabs" role="tablist" aria-label="Tracker views">
+      <button class="tab" role="tab" aria-selected="true" data-tab="weekly">Weekly goals</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="plan">Plan tasks</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="checkpoints">Checkpoints</button>
+    </div>
+
+    <div class="card" id="panel-weekly" role="tabpanel">
+      <form class="add-goal" id="goal-form">
+        <label class="sr" for="goal-text" style="position:absolute;left:-9999px">New goal</label>
+        <input id="goal-text" maxlength="200" placeholder="Add a goal for the week, e.g. Interview 5 classmates" autocomplete="off">
+        <select id="goal-week" aria-label="Week"></select>
+        <button class="btn" type="submit" id="goal-add">Add</button>
+      </form>
+      <div id="weekly-list"></div>
+    </div>
+    <div class="card" id="panel-plan" role="tabpanel" hidden><div id="plan-tasks"></div></div>
+    <div class="card" id="panel-checkpoints" role="tabpanel" hidden><div id="cp-tasks"></div></div>
+    <p class="hint">Rohan posts proof of what he finished each Friday. Updates sync automatically every few seconds.</p>
+  </section>
+
+  <section class="wrap" id="work">
+    <h2>How we'll work together</h2>
+    <p class="section-lead">About 2 hours of calls each week, with async support in between.</p>
+    <ul class="feature-list" id="work-list"></ul>
+  </section>
+
+  <section class="wrap" id="disclaimer">
+    <h2>Disclaimer</h2>
+    <ul class="feature-list" id="disclaimer-list"></ul>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">Prepared by Sabrina Huang &middot; November 2026</div>
+</footer>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(() => {
+  // ---------- Plan content ----------
+  const PRINCIPLES = [
+    ["Problem first.", "The best startups solve a problem real people have. We start by listening, not by building."],
+    ["Test before building.", "Each idea is checked with real users before Rohan spends weeks on code."],
+    ["Small, weekly progress.", "Every week ends with something concrete: interviews logged, a prototype, users signed up."],
+    ["Rohan owns it.", "I guide, question and push; he makes the decisions and does the work."],
+    ["Evidence over hype.", "Success is measured in users, feedback and results, not titles."]
+  ];
+
+  const MONTHS = [
+    {
+      id: "m1", title: "Month 1: Find the problem", dates: "Nov 16 to Dec 13",
+      outcome: "By the end of Month 1: a problem worth solving and an idea real people have reacted to.",
+      stages: [
+        { key: "problem", name: "Identify a meaningful problem", short: "Identify the problem", weeks: "Weeks 1-2", s: 1, e: 2, tasks: [
+          ["p1", "List problems from his own life, school and community"],
+          ["p2", "Talk to or message 15-20 people who have them and jot down what he hears"],
+          ["p3", "Do research on the problem"],
+          ["p4", "Pick one problem together on a call: who has it, how much it hurts, whether AI can help, whether he can reach these people"]
+        ]},
+        { key: "ideation", name: "Ideation", weeks: "Week 3", s: 3, e: 3, tasks: [
+          ["i1", "Brainstorm solutions, from simple to ambitious, and check what already exists"],
+          ["i2", "Choose one idea and who it is for"]
+        ]},
+        { key: "testing", name: "Testing", weeks: "Week 4", s: 4, e: 4, tasks: [
+          ["t1", "Show a quick mockup or demo to about 10 potential users"],
+          ["t2", "Decide together: build it, adjust it or rethink"]
+        ]}
+      ]
+    },
+    {
+      id: "m2", title: "Month 2: Build and get first users", dates: "Dec 14 to Jan 10",
+      outcome: "By the end of Month 2: a working product in real users' hands.",
+      stages: [
+        { key: "building", name: "Building", weeks: "Weeks 5-7, over winter break", s: 5, e: 7, tasks: [
+          ["b1", "Agree on the must-have features only"],
+          ["b2", "Build in weekly sprints, showing progress on each call"],
+          ["b3", "Test with 3-5 friendly users"]
+        ]},
+        { key: "small", name: "Small-scale distribution", weeks: "Week 8", s: 8, e: 8, tasks: [
+          ["s1", "Get 10-25 first users, starting with the people he interviewed"],
+          ["s2", "Watch how they use it; note feedback and a few simple numbers"],
+          ["s3", "Start posting short build-in-public updates on social media, so there's an audience by launch"]
+        ]}
+      ]
+    },
+    {
+      id: "m3", title: "Month 3: Improve, grow and build credibility", dates: "Jan 11 to Feb 7",
+      outcome: "By the end of Month 3: a product with growing usage and real evidence to show for it.",
+      stages: [
+        { key: "revise", name: "Revise", weeks: "Week 9", s: 9, e: 9, tasks: [
+          ["r1", "Sort feedback into fix now and fix later"],
+          ["r2", "Ship the most important improvements"]
+        ]},
+        { key: "distribution", name: "Distribution", weeks: "Weeks 10-11", s: 10, e: 11, tasks: [
+          ["d1", "Pick 1-2 channels that fit his users and set a growth target"],
+          ["d2", "<b>Social media:</b> short videos on the problem, the product and his build journey (TikTok, Instagram Reels, YouTube Shorts, LinkedIn, X), posted on a regular schedule"],
+          ["d3", "Share the product in online communities where his users already are (Reddit, Discord, forums, school groups)"],
+          ["d4", "Track usage weekly, including which posts bring in new users"]
+        ]},
+        { key: "credibility", name: "Credibility", weeks: "Week 12", s: 12, e: 12, tasks: [
+          ["c1", "A short demo video and a simple project page with results and user quotes"],
+          ["c2", "<b>Press:</b> pitch the story to local news stations, newspapers and school or district outlets, with a short press release and pitch email"],
+          ["c3", "<b>Social proof:</b> share milestones, user stories and results publicly to grow a following around the project"],
+          ["c4", "Reach out to 1-2 mentors or experts; look at a pitch competition or showcase"],
+          ["c5", "3-month review and next steps"]
+        ]}
+      ]
+    }
+  ];
+
+  const CHECKPOINTS = [
+    { id: "cp1", week: 4, name: "1: End of Month 1", date: "Dec 13",
+      milestone: "Problem chosen and idea tested with real users",
+      deliver: "Problem-discovery framework and interview questions; feedback on his notes; help choosing the problem and idea; build plan" },
+    { id: "cp2", week: 8, name: "2: End of Month 2", date: "Jan 10",
+      milestone: "Working product with its first 10-25 users",
+      deliver: "Feature scoping; weekly sprint reviews; technical and AI guidance; user-recruiting plan" },
+    { id: "cp3", week: 12, name: "3: End of Month 3", date: "Feb 7",
+      milestone: "Improved product, growing usage, demo and project page",
+      deliver: "Feedback review; distribution, social media and press strategy; review of demo and project page; 3-month review and next-phase plan" }
+  ];
+
+  const WORK = [
+    ["Two weekly calls (about 1 hour each)", "One to review progress and set the week's goals, one working session on the current stage."],
+    ["Async support", "Feedback on his interview notes, briefs, designs and code by message, usually within 24 hours on weekdays."],
+    ["Weekly goals in a shared tracker", "Rohan posts proof of what he finished each Friday."],
+    ["Parent updates", "At each checkpoint, plus a short note if anything needs attention."],
+    ["A 3-month review", "With Rohan and his mom at the end to decide on next steps."]
+  ];
+
+  const DISCLAIMER = [
+    ["No guaranteed outcomes.", "This plan provides mentorship and guidance. I cannot guarantee any specific result, including users, revenue, funding, awards or college admissions."],
+    ["Results depend on the student.", "Progress depends on Rohan's effort, time and follow-through. My role is to guide, support and hold him accountable, not to do the work for him."],
+    ["Payment covers time and guidance.", "Fees pay for mentorship sessions, async support and the deliverables listed above. They are not contingent on Rohan reaching any milestone."],
+    ["Rohan owns his work.", "Ideas, code and products he creates belong to him and his family."],
+    ["Timelines are estimates.", "Stages may shift based on school commitments, holidays and what testing reveals."],
+    ["Materials are for your family only.", "Templates, frameworks and resources I share may not be copied or distributed."]
+  ];
+
+  const START = new Date(2026, 10, 16); // Nov 16, 2026 (local time)
+  const WEEK_MS = 7 * 24 * 3600 * 1000;
+  const currentWeek = () => Math.min(12, Math.max(1, Math.floor((Date.now() - START.getTime()) / WEEK_MS) + 1));
+  const weekRange = (w) => {
+    const a = new Date(START.getTime() + (w - 1) * WEEK_MS), b = new Date(a.getTime() + 6 * 24 * 3600 * 1000);
+    const f = (d) => d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+    return `${f(a)} to ${f(b)}`;
+  };
+
+  const STATUS_LABEL = { todo: "Not started", doing: "In progress", done: "Done" };
+  const NEXT = { todo: "doing", doing: "done", done: "todo" };
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const $ = (id) => document.getElementById(id);
+  const allTasks = MONTHS.flatMap((m) => m.stages.flatMap((s) => s.tasks.map(([id]) => ({ id, month: m.id, stage: s.key }))));
+
+  // ---------- State ----------
+  let state = { status: {}, goals: [], updatedAt: null, pinRequired: false };
+  let mode = "loading"; // "shared" | "local" | "loading"
+  const LS_KEY = "rohan-tracker-local-v1";
+  const PIN_KEY = "rohan-tracker-pin";
+  const lsGet = (k) => { try { return localStorage.getItem(k); } catch { return null; } };
+  const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch {} };
+  const lsDel = (k) => { try { localStorage.removeItem(k); } catch {} };
+  const statusOf = (id) => state.status[id] || "todo";
+
+  // ---------- Static render ----------
+  $("principles-list").innerHTML = PRINCIPLES.map(([t, d], i) =>
+    `<div class="card principle"><div class="num">0${i + 1}</div><h3>${t}</h3><p>${d}</p></div>`).join("");
+
+  $("month-list").innerHTML = MONTHS.map((m) => `
+    <article class="card month">
+      <div class="month-top"><h3>${m.title}</h3><span class="month-tag">${m.dates}</span></div>
+      ${m.stages.map((s) => `
+        <div class="stage">
+          <h4>${s.name} <span>(${s.weeks})</span></h4>
+          <ul>${s.tasks.map(([, t]) => `<li>${t}</li>`).join("")}</ul>
+        </div>`).join("")}
+      <p class="month-outcome">${m.outcome}</p>
+    </article>`).join("");
+
+  $("milestone-rows").innerHTML = CHECKPOINTS.map((c) =>
+    `<tr><td><b>${c.name}</b><br><span style="color:var(--muted)">${c.date}</span></td><td>${c.milestone}</td><td>${c.deliver}</td></tr>`).join("");
+
+  $("work-list").innerHTML = WORK.map(([t, d]) => `<li class="card"><b>${t}</b><span>${d}</span></li>`).join("");
+  $("disclaimer-list").innerHTML = DISCLAIMER.map(([t, d]) => `<li class="card"><b>${t}</b><span>${d}</span></li>`).join("");
+
+  const weekSel = $("goal-week");
+  weekSel.innerHTML = Array.from({ length: 12 }, (_, i) => `<option value="${i + 1}">Week ${i + 1} (${weekRange(i + 1)})</option>`).join("");
+  weekSel.value = String(currentWeek());
+
+  // ---------- Dynamic render ----------
+  function renderTimeline() {
+    const stages = MONTHS.flatMap((m) => m.stages);
+    let html = `<div></div>` +
+      `<div class="tl-head month" style="grid-column: span 4">Month 1</div>` +
+      `<div class="tl-head month" style="grid-column: span 4">Month 2</div>` +
+      `<div class="tl-head month" style="grid-column: span 4">Month 3</div>` +
+      `<div></div>` + Array.from({ length: 12 }, (_, i) => `<div class="tl-head">W${i + 1}</div>`).join("");
+    stages.forEach((s, i) => {
+      const ids = s.tasks.map(([id]) => id);
+      const pct = Math.round(100 * ids.filter((id) => statusOf(id) === "done").length / ids.length);
+      html += `<div class="tl-label">${i + 1} &middot; ${s.short || s.name}</div>`;
+      if (s.s > 1) html += `<div style="grid-column: span ${s.s - 1}"></div>`;
+      html += `<div class="tl-bar" style="grid-column: span ${s.e - s.s + 1}" title="${pct}% done"><div class="fill" style="width:${pct}%"></div></div>`;
+      if (s.e < 12) html += `<div style="grid-column: span ${12 - s.e}"></div>`;
+    });
+    html += `<div class="tl-label"><b>Checkpoints</b></div>`;
+    let prev = 0;
+    CHECKPOINTS.forEach((c) => {
+      html += `<div class="tl-cp" style="grid-column: span ${c.week - prev}"><div class="diamond ${statusOf(c.id) === "done" ? "done" : ""}" title="Checkpoint ${c.name}"></div></div>`;
+      prev = c.week;
+    });
+    $("timeline").innerHTML = html;
+  }
+
+  function renderProgress() {
+    const pct = (ids) => ids.length ? Math.round(100 * ids.filter((id) => statusOf(id) === "done").length / ids.length) : 0;
+    const overall = pct(allTasks.map((t) => t.id));
+    const cards = [{ label: "Overall plan", value: overall }].concat(MONTHS.map((m, i) => ({
+      label: `Month ${i + 1}`, value: pct(allTasks.filter((t) => t.month === m.id).map((t) => t.id))
+    })));
+    const wk = currentWeek();
+    const wkGoals = state.goals.filter((g) => g.week === wk);
+    const wkDone = wkGoals.filter((g) => g.status === "done").length;
+    $("progress").innerHTML = cards.map((c) =>
+      `<div class="card stat"><div class="label">${c.label}</div><div class="value">${c.value}%</div><div class="meter"><div style="width:${c.value}%"></div></div></div>`).join("") +
+      `<div class="card stat"><div class="label">Week ${wk} goals</div><div class="value">${wkDone}/${wkGoals.length}</div><div class="meter"><div style="width:${wkGoals.length ? Math.round(100 * wkDone / wkGoals.length) : 0}%"></div></div></div>`;
+  }
+
+  const statusBtn = (kind, id, s, label) =>
+    `<button class="status" data-kind="${kind}" data-id="${id}" data-s="${s}" aria-label="${esc(label)}: ${STATUS_LABEL[s]}. Click to change.">${STATUS_LABEL[s]}</button>`;
+
+  function renderPlanTasks() {
+    $("plan-tasks").innerHTML = MONTHS.map((m) => m.stages.map((s) => `
+      <div class="task-group">
+        <h4>${m.title.split(":")[0]} &middot; ${s.name}</h4>
+        ${s.tasks.map(([id, t]) => {
+          const st = statusOf(id);
+          return `<div class="task ${st === "done" ? "is-done" : ""}"><div class="task-text">${t}</div>${statusBtn("task", id, st, t.replace(/<[^>]+>/g, ""))}</div>`;
+        }).join("")}
+      </div>`).join("")).join("");
+  }
+
+  function renderCheckpoints() {
+    $("cp-tasks").innerHTML = `<div class="task-group">` + CHECKPOINTS.map((c) => {
+      const st = statusOf(c.id);
+      return `<div class="task ${st === "done" ? "is-done" : ""}"><div class="task-text"><b>${c.name} (${c.date})</b><br>${c.milestone}</div>${statusBtn("task", c.id, st, c.name)}</div>`;
+    }).join("") + `</div>`;
+  }
+
+  function renderWeekly() {
+    const byWeek = {};
+    state.goals.forEach((g) => { (byWeek[g.week] = byWeek[g.week] || []).push(g); });
+    const weeks = Object.keys(byWeek).map(Number).sort((a, b) => b - a);
+    if (!weeks.length) { $("weekly-list").innerHTML = `<div class="empty">No weekly goals yet. Add Rohan's three goals for this week above.</div>`; return; }
+    $("weekly-list").innerHTML = weeks.map((w) => `
+      <div class="task-group">
+        <h4>Week ${w} &middot; ${weekRange(w)}${w === currentWeek() ? " &middot; this week" : ""}</h4>
+        ${byWeek[w].sort((a, b) => String(a.createdAt).localeCompare(String(b.createdAt))).map((g) => `
+          <div class="task ${g.status === "done" ? "is-done" : ""}">
+            <div class="task-text">${esc(g.text)}</div>
+            ${statusBtn("goal", g.id, g.status || "todo", g.text)}
+            <button class="del" data-del="${esc(g.id)}" aria-label="Delete goal: ${esc(g.text)}" title="Delete">&times;</button>
+          </div>`).join("")}
+      </div>`).join("");
+  }
+
+  function renderSync() {
+    const dot = $("sync-dot"), txt = $("sync-text");
+    dot.className = "dot" + (mode === "local" ? " local" : mode === "error" ? " err" : "");
+    $("local-banner").classList.toggle("show", mode === "local");
+    if (mode === "loading") { txt.textContent = "Loading..."; return; }
+    if (mode === "local") { txt.textContent = "Saved in this browser only"; return; }
+    if (mode === "error") { txt.textContent = "Can't reach the tracker. Retrying..."; return; }
+    txt.textContent = state.updatedAt
+      ? `Synced. Last change ${new Date(state.updatedAt).toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })}`
+      : "Synced";
+  }
+
+  function renderAll() { renderTimeline(); renderProgress(); renderPlanTasks(); renderCheckpoints(); renderWeekly(); renderSync(); }
+
+  // ---------- Storage ----------
+  function loadLocal() {
+    try { const s = JSON.parse(lsGet(LS_KEY) || "null"); if (s) state = { ...state, ...s }; } catch {}
+  }
+  function saveLocal() { lsSet(LS_KEY, JSON.stringify({ status: state.status, goals: state.goals, updatedAt: new Date().toISOString() })); }
+
+  async function fetchState(silent) {
+    try {
+      const r = await fetch("/api/tracker", { cache: "no-store" });
+      if (r.status === 503 || r.status === 404) throw Object.assign(new Error("no-api"), { local: true });
+      if (!r.ok) throw new Error("bad-status");
+      const data = await r.json();
+      state = { status: data.status || {}, goals: data.goals || [], updatedAt: data.updatedAt, pinRequired: !!data.pinRequired };
+      mode = "shared";
+    } catch (e) {
+      if (e.local || location.protocol === "file:" || mode === "loading") {
+        if (mode !== "local") { mode = "local"; loadLocal(); }
+      } else if (!silent) { mode = "error"; }
+      else if (mode === "shared") { mode = "error"; }
+    }
+    renderAll();
+  }
+
+  function getPin() {
+    if (!state.pinRequired) return "";
+    let pin = lsGet(PIN_KEY);
+    if (!pin) {
+      pin = window.prompt("Enter the edit PIN to update the tracker:") || "";
+      if (pin) lsSet(PIN_KEY, pin);
+    }
+    return pin;
+  }
+
+  async function send(payload) {
+    if (mode === "local") { saveLocal(); return true; }
+    const pin = getPin();
+    if (state.pinRequired && !pin) { toast("A PIN is needed to make changes."); return false; }
+    try {
+      const r = await fetch("/api/tracker", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", ...(pin ? { "x-edit-pin": pin } : {}) },
+        body: JSON.stringify(payload)
+      });
+      if (r.status === 401) { lsDel(PIN_KEY); toast("That PIN didn't work. Try again."); return false; }
+      if (!r.ok) throw new Error("save-failed");
+      const data = await r.json();
+      state.updatedAt = data.updatedAt;
+      if (mode === "error") mode = "shared";
+      renderSync();
+      return true;
+    } catch {
+      toast("Couldn't save. Check your connection and try again.");
+      return false;
+    }
+  }
+
+  let toastTimer;
+  function toast(msg) {
+    const t = $("toast"); t.textContent = msg; t.classList.add("show");
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove("show"), 2600);
+  }
+
+  // ---------- Events ----------
+  document.addEventListener("click", async (ev) => {
+    const btn = ev.target.closest(".status");
+    if (btn) {
+      const { kind, id } = btn.dataset;
+      if (kind === "task") {
+        const prev = statusOf(id), next = NEXT[prev];
+        state.status[id] = next; renderAll();
+        const ok = await send({ action: "setStatus", id, status: next });
+        if (!ok) { state.status[id] = prev; renderAll(); }
+        else if (mode === "shared") fetchState(true);
+      } else {
+        const g = state.goals.find((x) => x.id === id); if (!g) return;
+        const prev = g.status || "todo"; g.status = NEXT[prev]; renderAll();
+        const ok = await send({ action: "setGoalStatus", id, status: g.status });
+        if (!ok) { g.status = prev; renderAll(); }
+        else if (mode === "shared") fetchState(true);
+      }
+      return;
+    }
+    const del = ev.target.closest("[data-del]");
+    if (del) {
+      const id = del.dataset.del, g = state.goals.find((x) => x.id === id);
+      if (!g || !window.confirm(`Delete this goal?\n\n"${g.text}"`)) return;
+      const before = state.goals.slice();
+      state.goals = state.goals.filter((x) => x.id !== id); renderAll();
+      const ok = await send({ action: "deleteGoal", id });
+      if (!ok) { state.goals = before; renderAll(); }
+      return;
+    }
+    const tab = ev.target.closest(".tab");
+    if (tab) {
+      document.querySelectorAll(".tab").forEach((t) => t.setAttribute("aria-selected", String(t === tab)));
+      ["weekly", "plan", "checkpoints"].forEach((n) => { $("panel-" + n).hidden = n !== tab.dataset.tab; });
+    }
+  });
+
+  $("goal-form").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const input = $("goal-text"), text = input.value.trim(), week = Number(weekSel.value);
+    if (!text) { input.focus(); return; }
+    $("goal-add").disabled = true;
+    if (mode === "local") {
+      state.goals.push({ id: "g-" + Date.now().toString(36), text: text.slice(0, 200), week, status: "todo", createdAt: new Date().toISOString() });
+      saveLocal(); input.value = ""; renderAll();
+    } else {
+      const ok = await send({ action: "addGoal", text, week });
+      if (ok) { input.value = ""; await fetchState(true); }
+    }
+    $("goal-add").disabled = false;
+    input.focus();
+  });
+
+  // ---------- Start ----------
+  renderAll();
+  fetchState(false);
+  setInterval(() => { if (document.visibilityState === "visible" && mode !== "local") fetchState(true); }, 8000);
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible" && mode !== "local") fetchState(true); });
+})();
+</script>
+</body>
+</html>

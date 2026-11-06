@@ -1,0 +1,10 @@
+{
+  "name": "rohan-startup-plan",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "3-month startup plan site with a shared goal tracker",
+  "engines": {
+    "node": ">=18"
+  }
+}
